@@ -4,30 +4,62 @@
 import { useEffect, useState } from "react";
 
 function App(){
-
-  const [count, setCount] = useState(1);
-
-  // function increaseCount(){
-  //   setCount(currVal => currVal + 1);
-  // }
-
-  // function increaseCount(){
-  //   setCount(function(currVal){ 
-  //     return currVal + 1;
-  //   });
-  // }
+  const [currTab, setCurrTab] = useState(1);
+  const [tabData, setTabData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(function(){
-    console.log("above setinterval")
-    setInterval(increaseCount, 1000);
-  }, [])
+    setLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/todos/" + currTab)
+    .then(async res =>{
+      const json = await res.json();
+      setTabData(json);
+      setLoading(false);
+    })
+  },[currTab])
+
 
   return(
     <div>
-      {count}
+      <button onClick={function(){setCurrTab(1)}} style={{color : currTab == 1 ? "red" : "black"}}>Task #1</button>
+      <button onClick={function(){setCurrTab(2)}} style={{color : currTab == 2 ? "red" : "black"}}>Task #2</button>
+      <button onClick={function(){setCurrTab(3)}} style={{color : currTab == 3 ? "red" : "black"}}>Task #3</button>
+      <button onClick={function(){setCurrTab(4)}} style={{color : currTab == 4 ? "red" : "black"}}>Task #4</button>
+
+      <br />
+      {loading ? "Loading...." : tabData.title}
     </div>
   )
 }
+
+// function App(){
+
+//   const [count, setCount] = useState(1);
+
+//   // function increaseCount(){
+//   //   setCount(currentValue => currentValue + 1);
+//   //   console.log(count);
+//   // }
+
+//   function increaseCount(){
+//     setCount(function(currVal){ 
+//       return currVal + 1;
+      
+//     });
+//     console.log(currVal);
+//   }
+
+//   // useEffect(function(){
+//   //   console.log("above setinterval")
+//   //   setInterval(increaseCount, 1000);
+//   // }, [])
+
+//   return(
+//     <div>
+//       {count}
+//     </div>
+//   )
+// }
 
 // function App() {
 //   return (
