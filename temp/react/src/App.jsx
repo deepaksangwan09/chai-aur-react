@@ -4,33 +4,48 @@
 import { useEffect, useState } from "react";
 
 function App(){
-  const [currTab, setCurrTab] = useState(1);
-  const [tabData, setTabData] = useState({});
-  const [loading, setLoading] = useState(true);
 
-  useEffect(function(){
-    setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/todos/" + currTab)
-    .then(async res =>{
-      const json = await res.json();
-      setTabData(json);
-      setLoading(false);
-    })
-  },[currTab])
-
-
-  return(
-    <div>
-      <button onClick={function(){setCurrTab(1)}} style={{color : currTab == 1 ? "red" : "black"}}>Task #1</button>
-      <button onClick={function(){setCurrTab(2)}} style={{color : currTab == 2 ? "red" : "black"}}>Task #2</button>
-      <button onClick={function(){setCurrTab(3)}} style={{color : currTab == 3 ? "red" : "black"}}>Task #3</button>
-      <button onClick={function(){setCurrTab(4)}} style={{color : currTab == 4 ? "red" : "black"}}>Task #4</button>
-
-      <br />
-      {loading ? "Loading...." : tabData.title}
+  return <div style={{display:"flex"}}>
+      <Card innerContent = {"hi there"} />
+      <Card innerContent = {<div style={{color:"yellow"}}> hello there </div>} />
     </div>
-  )
+  
 }
+
+function Card({innerContent}){
+  return <div style={{backgroundColor: "black", borderRadius:10 , color:"white", padding:10, margin:10}}>
+    {innerContent}
+    </div>
+  
+}
+// function App(){
+//   const [currTab, setCurrTab] = useState(1);
+//   const [tabData, setTabData] = useState({});
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(function(){
+//     setLoading(true);
+//     fetch("https://jsonplaceholder.typicode.com/todos/" + currTab)
+//     .then(async res =>{
+//       const json = await res.json();
+//       setTabData(json);
+//       setLoading(false);
+//     })
+//   },[currTab])
+
+
+//   return(
+//     <div>
+//       <button onClick={function(){setCurrTab(1)}} style={{color : currTab == 1 ? "red" : "black"}}>Task #1</button>
+//       <button onClick={function(){setCurrTab(2)}} style={{color : currTab == 2 ? "red" : "black"}}>Task #2</button>
+//       <button onClick={function(){setCurrTab(3)}} style={{color : currTab == 3 ? "red" : "black"}}>Task #3</button>
+//       <button onClick={function(){setCurrTab(4)}} style={{color : currTab == 4 ? "red" : "black"}}>Task #4</button>
+
+//       <br />
+//       {loading ? "Loading...." : tabData.title}
+//     </div>
+//   )
+// }
 
 // function App(){
 
