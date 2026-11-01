@@ -1,56 +1,105 @@
+import "./App.css";
 
-// import "./App.css";
+import { useEffect, useState } from "react";
+import { useFetch, usePostTitle } from "./hooks/useFetch";
 
-import { useEffect, useState , useContext, createContext} from "react";
+function App() {
+  const [currentPost, setCurrentPost] = useState(1);
+  const { finalData, loading } = useFetch(
+    "https://jsonplaceholder.typicode.com/posts/" + currentPost,
+  );
 
-
-const BulbContext = createContext();
-
-
-function App(){
-  const [bulbOn, setBulbOn] = useState(true);
-  
-
-  return <div>
-    <BulbContext.Provider value ={{
-      bulbOn: bulbOn,
-      setBulbOn : setBulbOn
-    }}>
-    <Light/>
-    </BulbContext.Provider>
-  </div>
-}
-
-function Light(){
-  return <div>
-    <LightBulb/>
-    <LightSwitch/>
-  </div>
- 
-}
-
-function LightBulb(){
-  const {bulbOn} = useContext(BulbContext);
-
-  return <div>
-    {bulbOn ? "BulbOn" : "BulbOff"}
-  </div>
-}
-
-function LightSwitch(){
-  const {bulbOn, setBulbOn} = useContext(BulbContext);
-
-  function toggle(){
-    setBulbOn(!bulbOn)
-    
+  if (loading) {
+    return <div>Loading.....</div>;
   }
 
- 
-  return <div>
-     <button onClick={toggle}> Toggle the bulb</button>
-     <button onClick = {() => (setCount(count-1) )}> hiii</button>
-  </div>
+  return (
+    <div>
+      <button onClick={() => setCurrentPost(1)}>1</button>
+      <button onClick={() => setCurrentPost(2)}>2</button>
+      <button onClick={() => setCurrentPost(3)}>3</button>
+      {JSON.stringify(finalData.title)}
+    </div>
+  );
 }
+
+// function useCounter(){
+//   const[count, setCount] = useState(0);
+
+//   function increaseCount(){
+//     setCount(count + 1);
+//     // setCount( c=> c+1);
+//   }
+
+//   return{
+//     count: count,
+//     increaseCount: increaseCount
+//   }
+// }
+
+// function App(){
+
+//   return <div>
+//     <Counter />
+//     <Counter />
+//     <Counter />
+//     <Counter />
+//   </div>
+
+// }
+
+// function Counter(){
+// const {count, increaseCount} = useCounter();
+
+//   return <div>
+//     <button onClick={increaseCount}>Increase {count}</button>
+//   </div>
+// }
+
+// const BulbContext = createContext();
+
+// function App(){
+//   const [bulbOn, setBulbOn] = useState(true);
+
+//   return <div>
+//     <BulbContext.Provider value ={{
+//       bulbOn: bulbOn,
+//       setBulbOn : setBulbOn
+//     }}>
+//     <Light/>
+//     </BulbContext.Provider>
+//   </div>
+// }
+
+// function Light(){
+//   return <div>
+//     <LightBulb/>
+//     <LightSwitch/>
+//   </div>
+
+// }
+
+// function LightBulb(){
+//   const {bulbOn} = useContext(BulbContext);
+
+//   return <div>
+//     {bulbOn ? "BulbOn" : "BulbOff"}
+//   </div>
+// }
+
+// function LightSwitch(){
+//   const {bulbOn, setBulbOn} = useContext(BulbContext);
+
+//   function toggle(){
+//     setBulbOn(!bulbOn)
+
+//   }
+
+//   return <div>
+//      <button onClick={toggle}> Toggle the bulb</button>
+//      <button onClick = {() => (setCount(count-1) )}> hiii</button>
+//   </div>
+// }
 // function App(){
 //   const [currTab, setCurrTab] = useState(1);
 //   const [tabData, setTabData] = useState({});
@@ -65,7 +114,6 @@ function LightSwitch(){
 //       setLoading(false);
 //     })
 //   },[currTab])
-
 
 //   return(
 //     <div>
@@ -90,9 +138,9 @@ function LightSwitch(){
 //   // }
 
 //   function increaseCount(){
-//     setCount(function(currVal){ 
+//     setCount(function(currVal){
 //       return currVal + 1;
-      
+
 //     });
 //     console.log(currVal);
 //   }
